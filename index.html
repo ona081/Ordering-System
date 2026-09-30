@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <title>訂飲料系統</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 龜記茗品品牌色：深墨綠 + 金棕 + 米白，參考 guiji-group.com */
+      --primary: #1c3829;
+      --primary-dark: #0e2318;
+      --primary-light: #eef1e8;
+      --accent: #b8863f;
+      --accent-dark: #96692c;
+      --bg: #f6f3ea;
+      --card: #fffdf8;
+      --text: #2b2a22;
+      --text-muted: #8a8471;
+      --border: #e4ddc9;
+      --danger: #a8453a;
+      --radius: 6px;
+      --shadow: 0 4px 16px rgba(14, 35, 24, 0.06);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding-bottom: 60px;
+    }
+
+    h1, h2, .serif {
+      font-family: "Noto Serif TC", "Cormorant Garamond", serif;
+    }
+
+    header {
+      background: linear-gradient(160deg, var(--primary-dark), var(--primary) 65%);
+      color: #f6f3ea;
+      padding: 40px 20px 34px;
+      text-align: center;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      display: block;
+      width: 56px;
+      height: 1px;
+      background: var(--accent);
+      margin: 16px auto 0;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 20px;
+      color: var(--accent);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 500;
+      letter-spacing: 4px;
+    }
+    header .en-tagline {
+      margin: 8px 0 0;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: var(--accent);
+    }
+    header p.sub { margin: 4px 0 0; opacity: 0.75; font-size: 12px; letter-spacing: 1px; }
+
+    .container {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .container { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .card h2 {
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin: 0 0 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary-dark);
+    }
+
+    .card h2 .dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      display: inline-block;
+      transform: rotate(45deg);
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 12px 0 6px;
+    }
+
+    input[type="text"], input[type="number"], select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 14px;
+      background: #fdfcf7;
+      font-family: inherit;
+      color: var(--text);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: #fff;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .radio-group label {
+      margin: 0;
+      flex: 1 1 auto;
+      text-align: center;
+      padding: 8px 6px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text);
+      transition: 0.15s;
+      user-select: none;
+    }
+
+    .radio-group input { display: none; }
+
+    .radio-group input:checked + span {
+      color: #fff;
+    }
+
+    .radio-group label:has(input:checked) {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 14px;
+      transition: 0.15s;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--primary);
+      color: #f6f3ea;
+      padding: 13px;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      margin-top: 18px;
+      border: 1px solid var(--primary);
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent-dark);
+      border: 1px solid var(--accent);
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+    .btn-secondary:hover { background: var(--accent); color: #fff; }
+
+    .btn-danger {
+      background: transparent;
+      border: 1px solid #e3c9c4;
+      color: var(--danger);
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+    .btn-danger:hover { background: #f8ece9; }
+
+    .menu-list { list-style: none; padding: 0; margin: 0; }
+    .menu-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .menu-list li:last-child { border-bottom: none; }
+
+    .menu-add-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .menu-add-row input { flex: 1; }
+    .menu-add-row input.price { flex: 0 0 80px; }
+
+    .toggle-link {
+      font-size: 12px;
+      color: var(--accent-dark);
+      cursor: pointer;
+      text-decoration: underline;
+      margin-left: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    th { color: var(--text-muted); font-weight: 600; font-size: 12px; }
+    tr:last-child td { border-bottom: none; }
+
+    .tag {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+      margin-right: 4px;
+    }
+
+    .empty-hint {
+      color: var(--text-muted);
+      font-size: 13px;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .stat-box {
+      background: var(--primary-dark);
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      text-align: center;
+    }
+    .stat-box .num {
+      font-family: "Noto Serif TC", serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .stat-box .label {
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: #cdd6cc;
+      margin-top: 4px;
+    }
+
+    .group-list { list-style: none; padding: 0; margin: 0; }
+    .group-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: #fdfcf7;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 3px;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .group-list .count {
+      font-weight: 700;
+      color: var(--accent-dark);
+      font-size: 14px;
+    }
+
+    .status-msg {
+      font-size: 12px;
+      margin-top: 8px;
+      min-height: 16px;
+    }
+    .status-msg.error { color: var(--danger); }
+    .status-msg.success { color: var(--primary); }
+
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      font-size: 14px;
+      color: var(--primary-dark);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand-mark">龜</div>
+    <h1>訂 飲 料 系 統</h1>
+    <p class="en-tagline">Dream Big , Live Fresh</p>
+    <p class="sub">填寫你的訂單，團購主後台即時統整</p>
+  </header>
+
+  <div class="container">
+
+    <!-- 左側：填單區 -->
+    <div>
+      <div class="card">
+        <h2><span class="dot"></span>我要訂飲料</h2>
+
+        <label>點餐人姓名 <span style="color:var(--danger)">*</span></label>
+        <input type="text" id="inputName" placeholder="請輸入姓名">
+
+        <label>飲料品項 <span style="color:var(--danger)">*</span></label>
+        <select id="selectItem"></select>
+
+        <label>甜度</label>
+        <div class="radio-group" id="sugarGroup"></div>
+
+        <label>冰塊</label>
+        <div class="radio-group" id="iceGroup"></div>
+
+        <label>備註（例如：加椰果）</label>
+        <textarea id="inputNote" rows="2" placeholder="有其他需求可寫在這裡"></textarea>
+
+        <label>加料 / 額外加價（元，選填）</label>
+        <input type="number" id="inputExtra" placeholder="0" min="0">
+
+        <button class="btn-primary" onclick="submitOrder()">加入團購單</button>
+        <div class="status-msg" id="orderStatus"></div>
+      </div>
+
+      <div class="card">
+        <h2>
+          <span class="dot"></span>品項管理
+          <span class="toggle-link" onclick="toggleMenuManage()">團購主點我展開/收合</span>
+        </h2>
+        <div id="menuManage" style="display:none;">
+          <ul class="menu-list" id="menuList"></ul>
+          <div class="menu-add-row">
+            <input type="text" id="newItemCategory" placeholder="分類(選填)" style="flex:0 0 90px;">
+            <input type="text" id="newItemName" placeholder="品項名稱">
+            <input type="number" class="price" id="newItemPrice" placeholder="金額">
+            <button class="btn-secondary" onclick="addItem()">新增</button>
+          </div>
+          <div class="status-msg" id="menuStatus"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右側：後台統整看板 -->
+    <div>
+      <div class="card">
+        <h2><span class="dot"></span>財務統計</h2>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="num" id="statCups">0</div>
+            <div class="label">總杯數</div>
+          </div>
+          <div class="stat-box">
+            <div class="num" id="statTotal">$0</div>
+            <div class="label">應付總金額</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span class="dot"></span>團購主訂單統計（分組加總）</h2>
+        <ul class="group-list" id="groupStats"></ul>
+        <div class="empty-hint" id="groupEmpty" style="display:none;">目前還沒有訂單</div>
+      </div>
+
+      <div class="card">
+        <h2><span class="dot"></span>飲料滿意度調查</h2>
+
+        <label>姓名（選填，可匿名）</label>
+        <input type="text" id="surveyName" placeholder="可留白">
+
+        <label>好喝度</label>
+        <div class="radio-group" id="ratingGroup"></div>
+
+        <label>下次還要訂嗎？</label>
+        <div class="radio-group" id="wantAgainGroup"></div>
+
+        <label>其他意見（選填）</label>
+        <textarea id="surveyComment" rows="2" placeholder="想跟團購主說的話"></textarea>
+
+        <button class="btn-primary" onclick="submitSurvey()">送出意見</button>
+        <div class="status-msg" id="surveyStatus"></div>
+      </div>
+
+      <div class="card">
+        <h2><span class="dot"></span>意見收集</h2>
+        <ul class="group-list" id="surveyList"></ul>
+        <div class="empty-hint" id="surveyEmpty" style="display:none;">目前還沒有人填寫意見</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="loading-overlay" id="loadingOverlay">更新中...</div>
+
+  <script>
+    var SUGAR_OPTIONS = ['正常', '少糖', '半糖', '微糖', '無糖'];
+    var ICE_OPTIONS = ['正常', '少冰', '微冰', '去冰', '完全去冰/常溫'];
+    var RATING_OPTIONS = [
+      { value: 1, label: '★☆☆☆☆' },
+      { value: 2, label: '★★☆☆☆' },
+      { value: 3, label: '★★★☆☆' },
+      { value: 4, label: '★★★★☆' },
+      { value: 5, label: '★★★★★' }
+    ];
+    var WANT_AGAIN_OPTIONS = ['要', '普通', '不要'];
+
+    var currentData = { items: [], orders: [], surveys: [] };
+    var selectedSugar = '正常';
+    var selectedIce = '正常';
+    var selectedRating = 5;
+    var selectedWantAgain = '要';
+
+    function init() {
+      renderRadioGroups();
+      loadData();
+      setInterval(loadData, 4000); // 即時更新
+    }
+
+    function renderRadioGroups() {
+      var sugarHtml = SUGAR_OPTIONS.map(function (s, i) {
+        return '<label><input type="radio" name="sugar" value="' + s + '"' + (i === 0 ? ' checked' : '') +
+          ' onchange="selectedSugar=\'' + s + '\'"><span>' + s + '</span></label>';
+      }).join('');
+      document.getElementById('sugarGroup').innerHTML = sugarHtml;
+
+      var iceHtml = ICE_OPTIONS.map(function (s, i) {
+        return '<label><input type="radio" name="ice" value="' + s + '"' + (i === 0 ? ' checked' : '') +
+          ' onchange="selectedIce=\'' + s + '\'"><span>' + s + '</span></label>';
+      }).join('');
+      document.getElementById('iceGroup').innerHTML = iceHtml;
+
+      var ratingHtml = RATING_OPTIONS.map(function (r, i) {
+        return '<label><input type="radio" name="rating" value="' + r.value + '"' + (i === RATING_OPTIONS.length - 1 ? ' checked' : '') +
+          ' onchange="selectedRating=' + r.value + '"><span>' + r.label + '</span></label>';
+      }).join('');
+      document.getElementById('ratingGroup').innerHTML = ratingHtml;
+
+      var wantAgainHtml = WANT_AGAIN_OPTIONS.map(function (w, i) {
+        return '<label><input type="radio" name="wantAgain" value="' + w + '"' + (i === 0 ? ' checked' : '') +
+          ' onchange="selectedWantAgain=\'' + w + '\'"><span>' + w + '</span></label>';
+      }).join('');
+      document.getElementById('wantAgainGroup').innerHTML = wantAgainHtml;
+    }
+
+    function loadData() {
+      google.script.run.withSuccessHandler(function (data) {
+        currentData = data;
+        renderAll();
+      }).getData();
+    }
+
+    function renderAll() {
+      renderMenuSelect();
+      renderMenuManageList();
+      renderGroupStats();
+      renderFinance();
+      renderSurveyList();
+    }
+
+    function renderMenuSelect() {
+      var sel = document.getElementById('selectItem');
+      var prevValue = sel.value;
+
+      var groups = {};
+      var order = [];
+      currentData.items.forEach(function (item) {
+        var cat = item.category || '其他';
+        if (!groups[cat]) { groups[cat] = []; order.push(cat); }
+        groups[cat].push(item);
+      });
+
+      sel.innerHTML = order.map(function (cat) {
+        var options = groups[cat].map(function (item) {
+          return '<option value="' + item.id + '">' + item.name + '（$' + item.price + '）</option>';
+        }).join('');
+        return '<optgroup label="' + cat + '">' + options + '</optgroup>';
+      }).join('');
+
+      if (currentData.items.some(function (i) { return i.id === prevValue; })) {
+        sel.value = prevValue;
+      }
+    }
+
+    function renderMenuManageList() {
+      var ul = document.getElementById('menuList');
+      if (currentData.items.length === 0) {
+        ul.innerHTML = '<li style="color:var(--text-muted)">目前沒有品項</li>';
+        return;
+      }
+      ul.innerHTML = currentData.items.map(function (item) {
+        var catTag = item.category ? '<span class="tag">' + item.category + '</span> ' : '';
+        return '<li><span>' + catTag + item.name + ' — $' + item.price + '</span>' +
+          '<button class="btn-danger" onclick="removeItem(\'' + item.id + '\')">刪除</button></li>';
+      }).join('');
+    }
+
+    function renderSurveyList() {
+      var surveys = currentData.surveys || [];
+      var listEl = document.getElementById('surveyList');
+      var emptyEl = document.getElementById('surveyEmpty');
+
+      if (surveys.length === 0) {
+        listEl.innerHTML = '';
+        emptyEl.style.display = 'block';
+        return;
+      }
+      emptyEl.style.display = 'none';
+
+      var sorted = surveys.slice().sort(function (a, b) { return b.timestamp - a.timestamp; });
+      listEl.innerHTML = sorted.map(function (s) {
+        var stars = '★'.repeat(s.rating) + '☆'.repeat(5 - s.rating);
+        var sentimentHtml = s.sentiment ? '<span class="tag">AI：' + escapeHtml(s.sentiment) + '</span> ' : '';
+        var commentHtml = s.comment ? '<br><span style="color:var(--text-muted);font-size:12px;">' + escapeHtml(s.comment) + '</span>' : '';
+        return '<li style="align-items:flex-start;">' +
+          '<div><strong>' + escapeHtml(s.name) + '</strong> ' +
+          '<span style="color:var(--accent-dark);">' + stars + '</span> ' +
+          '<span class="tag">下次：' + s.wantAgain + '</span> ' + sentimentHtml + commentHtml + '</div>' +
+          '<button class="btn-danger" onclick="removeSurvey(\'' + s.id + '\')">刪除</button>' +
+          '</li>';
+      }).join('');
+    }
+
+    function renderGroupStats() {
+      var groups = {};
+      currentData.orders.forEach(function (o) {
+        var key = o.itemName + '|' + o.sugar + '|' + o.ice;
+        if (!groups[key]) {
+          groups[key] = { itemName: o.itemName, sugar: o.sugar, ice: o.ice, count: 0 };
+        }
+        groups[key].count++;
+      });
+
+      var keys = Object.keys(groups);
+      var listEl = document.getElementById('groupStats');
+      var emptyEl = document.getElementById('groupEmpty');
+
+      if (keys.length === 0) {
+        listEl.innerHTML = '';
+        emptyEl.style.display = 'block';
+        return;
+      }
+      emptyEl.style.display = 'none';
+
+      keys.sort(function (a, b) { return groups[b].count - groups[a].count; });
+
+      listEl.innerHTML = keys.map(function (k) {
+        var g = groups[k];
+        return '<li><span>' + escapeHtml(g.itemName) + ' ' + g.sugar + ' ' + g.ice + '</span>' +
+          '<span class="count">x ' + g.count + ' 杯</span></li>';
+      }).join('');
+    }
+
+    function renderFinance() {
+      var cups = currentData.orders.length;
+      var total = currentData.orders.reduce(function (sum, o) { return sum + Number(o.total); }, 0);
+      document.getElementById('statCups').textContent = cups;
+      document.getElementById('statTotal').textContent = '$' + total;
+    }
+
+    function submitOrder() {
+      var name = document.getElementById('inputName').value.trim();
+      var itemId = document.getElementById('selectItem').value;
+      var note = document.getElementById('inputNote').value.trim();
+      var extra = document.getElementById('inputExtra').value;
+      var statusEl = document.getElementById('orderStatus');
+
+      if (!name) {
+        showStatus(statusEl, '請輸入姓名', true);
+        return;
+      }
+      if (!itemId) {
+        showStatus(statusEl, '請選擇飲料品項', true);
+        return;
+      }
+
+      var order = {
+        name: name,
+        itemId: itemId,
+        sugar: selectedSugar,
+        ice: selectedIce,
+        note: note,
+        extra: extra ? Number(extra) : 0
+      };
+
+      setLoading(true);
+      google.script.run
+        .withSuccessHandler(function (data) {
+          setLoading(false);
+          currentData = data;
+          renderAll();
+          showStatus(statusEl, '已加入團購單！', false);
+          document.getElementById('inputName').value = '';
+          document.getElementById('inputNote').value = '';
+          document.getElementById('inputExtra').value = '';
+        })
+        .withFailureHandler(function (err) {
+          setLoading(false);
+          showStatus(statusEl, err.message || '送出失敗，請再試一次', true);
+        })
+        .addOrder(order);
+    }
+
+    function submitSurvey() {
+      var name = document.getElementById('surveyName').value.trim();
+      var comment = document.getElementById('surveyComment').value.trim();
+      var statusEl = document.getElementById('surveyStatus');
+
+      var survey = {
+        name: name,
+        rating: selectedRating,
+        wantAgain: selectedWantAgain,
+        comment: comment
+      };
+
+      setLoading(true);
+      google.script.run
+        .withSuccessHandler(function (data) {
+          setLoading(false);
+          currentData = data;
+          renderAll();
+          showStatus(statusEl, '感謝你的意見！', false);
+          document.getElementById('surveyName').value = '';
+          document.getElementById('surveyComment').value = '';
+        })
+        .withFailureHandler(function (err) {
+          setLoading(false);
+          showStatus(statusEl, err.message || '送出失敗，請再試一次', true);
+        })
+        .addSurvey(survey);
+    }
+
+    function removeSurvey(surveyId) {
+      if (!confirm('確定要刪除這筆意見嗎？')) return;
+      setLoading(true);
+      google.script.run
+        .withSuccessHandler(function (data) {
+          setLoading(false);
+          currentData = data;
+          renderAll();
+        })
+        .withFailureHandler(function () { setLoading(false); })
+        .deleteSurvey(surveyId);
+    }
+
+    function addItem() {
+      var name = document.getElementById('newItemName').value.trim();
+      var price = document.getElementById('newItemPrice').value;
+      var category = document.getElementById('newItemCategory').value.trim();
+      var statusEl = document.getElementById('menuStatus');
+
+      if (!name || price === '') {
+        showStatus(statusEl, '請輸入品項名稱與金額', true);
+        return;
+      }
+
+      setLoading(true);
+      google.script.run
+        .withSuccessHandler(function (data) {
+          setLoading(false);
+          currentData = data;
+          renderAll();
+          document.getElementById('newItemName').value = '';
+          document.getElementById('newItemPrice').value = '';
+          document.getElementById('newItemCategory').value = '';
+          showStatus(statusEl, '已新增品項', false);
+        })
+        .withFailureHandler(function (err) {
+          setLoading(false);
+          showStatus(statusEl, err.message || '新增失敗', true);
+        })
+        .addMenuItem(name, price, category);
+    }
+
+    function removeItem(itemId) {
+      if (!confirm('確定要刪除這個品項嗎？（已點的訂單不受影響）')) return;
+      setLoading(true);
+      google.script.run
+        .withSuccessHandler(function (data) {
+          setLoading(false);
+          currentData = data;
+          renderAll();
+        })
+        .withFailureHandler(function () { setLoading(false); })
+        .deleteMenuItem(itemId);
+    }
+
+    function toggleMenuManage() {
+      var el = document.getElementById('menuManage');
+      el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function showStatus(el, msg, isError) {
+      el.textContent = msg;
+      el.className = 'status-msg ' + (isError ? 'error' : 'success');
+      setTimeout(function () { el.textContent = ''; }, 3000);
+    }
+
+    function setLoading(show) {
+      document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+    }
+
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    init();
+  </script>
+</body>
+</html>
