@@ -68,6 +68,8 @@
       overflow-x: hidden;
       transition: background-color 0.3s ease, color 0.3s ease;
       user-select: none;
+      padding-top: 56px;
+      box-sizing: border-box;
     }
 
     /* Presentation Wrapper */
@@ -458,9 +460,109 @@
         display: none;
       }
     }
+
+    /* 頂部全站導覽列 */
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(11, 15, 25, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+      box-sizing: border-box;
+    }
+    html.light .site-nav {
+      background: rgba(255, 255, 255, 0.94);
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .site-nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .site-brand .brand-icon {
+      color: var(--primary-light);
+      display: flex;
+      align-items: center;
+    }
+    .site-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .site-nav-links .nav-link {
+      padding: 5px 14px;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid transparent;
+    }
+    .site-nav-links .nav-link:hover {
+      color: var(--text-main);
+      background: var(--bg-card-hover);
+    }
+    .site-nav-links .nav-link.active {
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .site-nav-links .nav-btn-paper {
+      border-color: var(--border-color);
+      color: var(--primary-light);
+      background: var(--bg-card);
+    }
+    .site-nav-links .nav-btn-paper:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+    @media print {
+      .site-nav { display: none !important; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- 頂部多頁網站導覽列 -->
+  <nav class="site-nav">
+    <div class="site-nav-inner">
+      <a href="index.html" class="site-brand">
+        <span class="brand-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+        </span>
+        <span>Ordering & Slides</span>
+      </a>
+      <div class="site-nav-links">
+        <a href="index.html" class="nav-link">🍵 訂飲料系統</a>
+        <a href="slides.html" class="nav-link active">📊 ESG 決策簡報</a>
+        <a href="paper.PDF" download="paper.pdf" class="nav-link nav-btn-paper">📥 下載 Paper</a>
+      </div>
+    </div>
+  </nav>
 
   <!-- Presentation Deck Container -->
   <div class="deck-container" id="presentationDeck">
