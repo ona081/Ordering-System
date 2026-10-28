@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>嚴選飲料介紹 ‧ 職人手作好茶 ｜ 我要訂飲料</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #153222;
+      --primary-dark: #0c1e14;
+      --primary-light: #eef3eb;
+      --accent: #b8863f;
+      --accent-light: #d8aa65;
+      --accent-dark: #916527;
+      --bg: #faf7f0;
+      --card-bg: #ffffff;
+      --text: #2c2b26;
+      --text-muted: #7d7767;
+      --border: #e6dfcf;
+      --border-dark: #ccbe9f;
+      --radius: 12px;
+      --shadow: 0 8px 24px rgba(21, 50, 34, 0.08);
+      --shadow-lg: 0 16px 40px rgba(21, 50, 34, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 70px;
+      background-image: radial-gradient(#e7dfce 0.8px, transparent 0.8px);
+      background-size: 24px 24px;
+    }
+
+    h1, h2, h3, .serif {
+      font-family: "Noto Serif TC", "Cormorant Garamond", serif;
+    }
+
+    .handwriting {
+      font-family: 'Caveat', cursive;
+    }
+
+    /* ====================================================
+       1. 頂部全站多頁導覽列（醒目大按鈕版）
+       ==================================================== */
+    .site-nav {
+      background: #0d1e15;
+      border-bottom: 3px solid var(--accent);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      padding: 6px 0;
+    }
+    .site-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .site-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .site-brand .brand-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(184, 134, 63, 0.25);
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      color: #ffd285;
+      font-weight: 900;
+    }
+    .site-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .site-nav-links .nav-link {
+      padding: 9px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      color: #e2e8f0;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .site-nav-links .nav-link:hover {
+      background: rgba(255, 255, 255, 0.22);
+      border-color: #ffffff;
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .site-nav-links .nav-link.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: #ffe0a3;
+      box-shadow: 0 0 14px rgba(184, 134, 63, 0.7);
+      transform: scale(1.02);
+    }
+    .site-nav-links .nav-btn-paper {
+      background: #194833;
+      border-color: #2ecc71;
+      color: #eaffea;
+    }
+    .site-nav-links .nav-btn-paper:hover {
+      background: #27ae60;
+      border-color: #a3ffc4;
+      color: #ffffff;
+    }
+
+    /* ====================================================
+       2. 手繪風 Hero 橫幅
+       ==================================================== */
+    .menu-hero {
+      background: linear-gradient(135deg, #12281b 0%, #1c3c2a 100%);
+      color: #ffffff;
+      padding: 50px 20px 45px;
+      position: relative;
+      overflow: hidden;
+    }
+    .menu-hero-inner {
+      max-width: 1150px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 30px;
+      align-items: center;
+    }
+    @media (max-width: 860px) {
+      .menu-hero-inner { grid-template-columns: 1fr; text-align: center; }
+    }
+    .menu-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(184, 134, 63, 0.2);
+      border: 1px solid rgba(184, 134, 63, 0.5);
+      color: #ffd699;
+      padding: 5px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .menu-hero h1 {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .menu-hero .subtitle {
+      font-size: 16px;
+      color: #c9d8cc;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+    .hero-art-frame {
+      background: #ffffff;
+      padding: 12px;
+      border-radius: 16px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+      transform: rotate(2deg);
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+    .hero-art-frame:hover {
+      transform: rotate(0deg) scale(1.02);
+    }
+    .hero-art-frame img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+    }
+    .hero-art-caption {
+      margin-top: 8px;
+      font-family: 'Caveat', cursive;
+      font-size: 18px;
+      color: #7a5c28;
+      font-weight: 700;
+    }
+
+    /* 手繪特色膠囊導航 */
+    .filter-bar-wrap {
+      max-width: 1150px;
+      margin: 35px auto 25px;
+      padding: 0 20px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 10px 22px;
+      border-radius: 30px;
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent-dark);
+      transform: translateY(-2px);
+    }
+    .filter-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 15px rgba(21, 50, 34, 0.25);
+    }
+
+    /* 產品網格 */
+    .menu-grid {
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 10px 20px 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 26px;
+    }
+    @media (max-width: 600px) {
+      .menu-grid { grid-template-columns: 1fr; }
+    }
+
+    .drink-card {
+      background: #ffffff;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+    .drink-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-light);
+    }
+    .drink-tag {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(184, 134, 63, 0.15);
+      color: var(--accent-dark);
+      border: 1px solid rgba(184, 134, 63, 0.3);
+    }
+    .drink-tag.hot {
+      background: #ffebe8;
+      color: #c93b2b;
+      border-color: #f7b7b0;
+    }
+    .drink-series {
+      font-size: 12px;
+      color: var(--accent-dark);
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .drink-title {
+      font-size: 21px;
+      font-weight: 900;
+      color: var(--primary-dark);
+      margin-bottom: 4px;
+    }
+    .drink-en {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 14px;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .drink-desc {
+      font-size: 13.5px;
+      color: #4a463c;
+      line-height: 1.7;
+      margin-bottom: 18px;
+      flex: 1;
+    }
+    .drink-features {
+      background: #fbf9f4;
+      border-left: 3px solid var(--accent);
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-bottom: 18px;
+      font-size: 12px;
+    }
+    .drink-features .item-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 3px;
+      color: #5d594d;
+    }
+    .drink-features .item-row:last-child { margin-bottom: 0; }
+    .drink-features strong { color: var(--primary-dark); }
+
+    .drink-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px dashed var(--border);
+      padding-top: 16px;
+    }
+    .drink-price {
+      font-family: "Noto Serif TC", serif;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--accent-dark);
+    }
+    .drink-price span {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: normal;
+    }
+    .btn-to-order {
+      background: var(--primary);
+      color: #ffffff;
+      padding: 9px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s ease;
+    }
+    .btn-to-order:hover {
+      background: var(--accent-dark);
+      transform: scale(1.05);
+      color: #ffffff;
+    }
+
+    /* 手繪風品茶插畫故事區 */
+    .craft-story-section {
+      max-width: 1150px;
+      margin: 40px auto 60px;
+      padding: 0 20px;
+    }
+    .craft-card {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 35px;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 35px;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+    @media (max-width: 820px) {
+      .craft-card { grid-template-columns: 1fr; text-align: center; }
+    }
+    .craft-img-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transform: rotate(-1.5deg);
+    }
+    .craft-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .craft-text h3 {
+      font-size: 24px;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+    }
+    .craft-text p {
+      font-size: 14px;
+      color: #555146;
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+    .craft-doodle-tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+    .craft-tag {
+      background: #f7f3e8;
+      border: 1px solid #dfd6c0;
+      color: #6d624a;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* 頁尾 */
+    footer {
+      background: var(--primary-dark);
+      color: #abbcb0;
+      padding: 40px 20px 25px;
+      text-align: center;
+      font-size: 13px;
+      border-top: 4px solid var(--accent);
+    }
+    footer h4 {
+      color: #ffffff;
+      font-size: 17px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    footer p { margin-bottom: 8px; }
+    footer .copyright {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 12px;
+      color: #728a78;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====================================================
+       1. 頂部多頁網站導覽列（醒目大按鈕版）
+       ==================================================== -->
+  <nav class="site-nav">
+    <div class="site-nav-inner">
+      <a href="index.html" class="site-brand">
+        <span class="brand-icon">飲</span>
+        <span>我要訂飲料</span>
+      </a>
+      <div class="site-nav-links">
+        <a href="index.html" class="nav-link">🍵【第 1 頁】我要訂飲料</a>
+        <a href="menu.html" class="nav-link active">✨【第 2 頁】飲料品項介紹</a>
+        <a href="slides.html" class="nav-link">📊【第 3 頁】ESG 決策簡報</a>
+        <a href="paper.PDF" download="paper.pdf" class="nav-link nav-btn-paper">📥 下載 Paper</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ====================================================
+       2. 手繪風 Hero 主視覺橫幅
+       ==================================================== -->
+  <section class="menu-hero">
+    <div class="menu-hero-inner">
+      <div>
+        <div class="menu-hero-badge">ARTISANAL TEA ‧ 職人手作 ‧ 現調鮮摘</div>
+        <h1>嚴選好茶品項一覽</h1>
+        <p class="subtitle">
+          堅持選用產地契作茶葉與產地現採鮮果。每一款手搖茶飲背後，都藏著我們對原料比例的極致講究與手沖慢焙的溫度。
+        </p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="index.html#order" style="background:var(--accent); color:#ffffff; padding:10px 24px; border-radius:30px; text-decoration:none; font-weight:700; font-size:14px; box-shadow:0 4px 15px rgba(0,0,0,0.25);">🛒 直接前往線上團購單</a>
+          <a href="#tea-craft" style="background:rgba(255,255,255,0.12); color:#ffffff; border:1px solid rgba(255,255,255,0.3); padding:10px 20px; border-radius:30px; text-decoration:none; font-weight:600; font-size:14px;">🍃 查看手作泡茶工藝</a>
+        </div>
+      </div>
+      
+      <!-- 藝術手繪插圖畫框 -->
+      <div class="hero-art-frame">
+        <img src="images/drink_art.jpg" alt="手繪茶飲插畫">
+        <div class="hero-art-caption">Fresh Fruit Tea & Boba Milk Tea ~ Handmade!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       3. 品項分類標籤
+       ==================================================== -->
+  <div class="filter-bar-wrap">
+    <button class="filter-btn active" onclick="filterMenu('all')">全部品項 (All)</button>
+    <button class="filter-btn" onclick="filterMenu('人氣招牌')">🏆 人氣必喝招牌</button>
+    <button class="filter-btn" onclick="filterMenu('鮮果好茶')">🍋 當季現榨鮮果</button>
+    <button class="filter-btn" onclick="filterMenu('小農厚奶')">🥛 濃醇小農厚奶</button>
+    <button class="filter-btn" onclick="filterMenu('台灣原茶')">🍃 經典高山原茶</button>
+  </div>
+
+  <!-- ====================================================
+       4. 產品卡片列表
+       ==================================================== -->
+  <main class="menu-grid" id="menuGrid">
+    
+    <!-- 1. 紅柚翡翠 -->
+    <article class="drink-card" data-category="人氣招牌">
+      <span class="drink-tag hot">人氣 TOP 1 🔥</span>
+      <div class="drink-series">🏆 經典招牌鮮果系列</div>
+      <h2 class="drink-title">紅柚翡翠</h2>
+      <div class="drink-en">Fresh Grapefruit Jade Green Tea</div>
+      <p class="drink-desc">
+        堅持每日人工手挖新鮮飽滿的紅葡萄柚果肉，保留果粒爆汁口感與清甜微酸，融合茉莉薰香的翡翠綠茶，入口回甘不苦澀。
+      </p>
+      <div class="drink-features">
+        <div class="item-row"><strong>主要原料：</strong>每日現剝紅柚果肉、茉莉翡翠綠茶</div>
+        <div class="item-row"><strong>黃金比例：</strong>推薦 微糖 (30%) ｜ 少冰或微冰</div>
+      </div>
+      <div class="drink-bottom">
+        <div class="drink-price">$69 <span>/ 大杯</span></div>
+        <a href="index.html#order" class="btn-to-order">🛒 點這杯飲料</a>
+      </div>
+    </article>
+
+    <!-- 2. 秀水甘蔗青茶 -->
+    <article class="drink-card" data-category="人氣招牌">
+      <span class="drink-tag">產地直送 🌾</span>
+      <div class="drink-series">🏆 經典招牌鮮果系列</div>
+      <h2 class="drink-title">秀水甘蔗青茶</h2>
+      <div class="drink-en">Sugar Cane Spring Tea</div>
+      <p class="drink-desc">
+        嚴選彰化秀水新鮮白甘蔗原汁冷壓鮮榨，搭配輕度發酵焙火的台灣四季春茶。自帶甘蔗天然蔗甜香，喉韻清甜爽口。
+      </p>
+      <div class="drink-features">
+        <div class="item-row"><strong>主要原料：</strong>彰化秀水白甘蔗原汁、台灣四季春茶</div>
+        <div class="item-row"><strong>黃金比例：</strong>推薦 一分糖 (10%) 或 無糖 ｜ 微冰</div>
+      </div>
+      <div class="drink-bottom">
+        <div class="drink-price">$60 <span>/ 大杯</span></div>
+        <a href="index.html#order" class="btn-to-order">🛒 點這杯飲料</a>
+      </div>
+    </article>
+
+    <!-- 3. 柳橙翡翠 -->
+    <article class="drink-card" data-category="鮮果好茶">
+      <span class="drink-tag">季節推薦 🍊</span>
+      <div class="drink-series">🍋 當季鮮果系列</div>
+      <h2 class="drink-title">柳橙翡翠</h2>
+      <div class="drink-en">Fresh Orange Green Tea</div>
+      <p class="drink-desc">
+        當季柳橙現榨原汁，果香濃郁馥郁，每一口都喝得到柑橘的清新甜感，與翡翠綠茶交織出最自然無負擔的果韻。
+      </p>
+      <div class="drink-features">
+        <div class="item-row"><strong>主要原料：</strong>產地現榨柳丁汁、翡翠綠茶底</div>
+        <div class="item-row"><strong>黃金比例：</strong>推薦 半糖 (50%) ｜ 微冰</div>
+      </div>
+      <div class="drink-bottom">
+        <div class="drink-price">$65 <span>/ 大杯</span></div>
+        <a href="index.html#order" class="btn-to-order">🛒 點這杯飲料</a>
+      </div>
+    </article>
+
+    <!-- 4. 濃乳茶（鮮奶烏龍） -->
+    <article class="drink-card" data-category="小農厚奶">
+      <span class="drink-tag hot">濃郁必喝 🥛</span>
+      <div class="drink-series">🥛 濃醇小農厚奶系列</div>
+      <h2 class="drink-title">濃乳茶（鮮奶烏龍）</h2>
+      <div class="drink-en">Artisanal Oolong Milk Tea</div>
+      <p class="drink-desc">
+        深焙熟成烏龍經過長時間慢火烘焙，搭配台灣在地小農優質鮮乳，茶感渾厚、乳香溫潤，尾韻帶有焦糖甜香。
+      </p>
+      <div class="drink-features">
+        <div class="item-row"><strong>主要原料：</strong>高山炭焙烏龍、在地小農生乳</div>
+        <div class="item-row"><strong>推薦加料：</strong>極推加波霸粉圓 (+$10) 或 小芋圓 (+$15)</div>
+      </div>
+      <div class="drink-bottom">
+        <div class="drink-price">$65 <span>/ 大杯</span></div>
+        <a href="index.html#order" class="btn-to-order">🛒 點這杯飲料</a>
+      </div>
+    </article>
+
+    <!-- 5. 黑糖珍珠厚純奶 -->
+    <article class="drink-card" data-category="小農厚奶">
+      <span class="drink-tag hot">手炒黑糖 🧋</span>
+      <div class="drink-series">🥛 濃醇小農厚奶系列</div>
+      <h2 class="drink-title">黑糖珍珠厚純奶</h2>
+      <div class="drink-en">Brown Sugar Pearl Fresh Milk</div>
+      <p class="drink-desc">
+        傳統古法手工翻炒黑糖，慢火蜜熬大波霸珍珠，溫熱 Q 彈的珍珠裹滿焦香黑糖蜜，倒入純濃冰鮮奶，不加一滴水！
+      </p>
+      <div class="drink-features">
+        <div class="item-row"><strong>主要原料：</strong>手工黑糖珍珠、特濃鮮乳（無茶底、無咖啡因）</div>
+        <div class="item-row"><strong>飲用秘訣：</strong>珍珠熱騰騰，飲用前搖勻 9 下口感最棒！</div>
+      </div>
+      <div class="drink-bottom">
+        <div class="drink-price">$75 <span>/ 大杯</span></div>
+        <a href="index.html#order" class="btn-to-order">🛒 點這杯飲料</a>
+      </div>
+    </article>
+
+    <!-- 6. 極品三十三茶王 -->
+    <article class="drink-card" data-category="台灣原茶">
+      <span class="drink-tag">比賽茶工藝 🍃</span>
+      <div class="drink-series">🍃 嚴選台灣原茶系列</div>
+      <h2 class="drink-title">極品三十三茶王</h2>
+      <div class="drink-en">King of Oolong Tea No.33</div>
+      <p class="drink-desc">
+        取名自「經 33 小時精細烘焙焙火，經過 3 道反覆揉捻工序」。茶湯金黃透亮，焙火麥香撲鼻，回甘生津綿延不絕。
+      </p>
+      <div class="drink-features">
+        <div class="item-row"><strong>主要原料：</strong>南投鹿谷高山手採烏龍葉</div>
+        <div class="item-row"><strong>黃金比例：</strong>純飲第一首選，推薦 無糖 (0%) ｜ 去冰或常溫</div>
+      </div>
+      <div class="drink-bottom">
+        <div class="drink-price">$45 <span>/ 大杯</span></div>
+        <a href="index.html#order" class="btn-to-order">🛒 點這杯飲料</a>
+      </div>
+    </article>
+
+    <!-- 7. 蘋果紅萱 -->
+    <article class="drink-card" data-category="鮮果好茶">
+      <span class="drink-tag">清爽推薦 🍎</span>
+      <div class="drink-series">🍋 當季鮮果系列</div>
+      <h2 class="drink-title">蘋果紅萱</h2>
+      <div class="drink-en">Fresh Apple Black Tea</div>
+      <p class="drink-desc">
+        新鮮富士蘋果原汁壓榨，搭配帶有天然熟成蜜桃果香的台灣紅萱紅茶，酸香清透、果香迷人，下午茶的最佳解膩首選。
+      </p>
+      <div class="drink-features">
+        <div class="item-row"><strong>主要原料：</strong>現榨蘋果汁、蜜香紅萱紅茶</div>
+        <div class="item-row"><strong>黃金比例：</strong>推薦 微糖 (30%) ｜ 少冰</div>
+      </div>
+      <div class="drink-bottom">
+        <div class="drink-price">$60 <span>/ 大杯</span></div>
+        <a href="index.html#order" class="btn-to-order">🛒 點這杯飲料</a>
+      </div>
+    </article>
+
+    <!-- 8. 香柚白茶 -->
+    <article class="drink-card" data-category="鮮果好茶">
+      <span class="drink-tag">輕盈花香 🌸</span>
+      <div class="drink-series">🍋 當季鮮果系列</div>
+      <h2 class="drink-title">香柚白茶</h2>
+      <div class="drink-en">Citrus White Tea</div>
+      <p class="drink-desc">
+        嚴選低溫慢發酵白茶為茶底，融入黃金香柚細緻果泥，散發淡雅白色小花香氣與柚皮精油芬芳，口感如絲綢般優雅輕盈。
+      </p>
+      <div class="drink-features">
+        <div class="item-row"><strong>主要原料：</strong>高山高雅白茶、蜜釀香柚泥</div>
+        <div class="item-row"><strong>黃金比例：</strong>推薦 微糖 (30%) ｜ 微冰</div>
+      </div>
+      <div class="drink-bottom">
+        <div class="drink-price">$65 <span>/ 大杯</span></div>
+        <a href="index.html#order" class="btn-to-order">🛒 點這杯飲料</a>
+      </div>
+    </article>
+
+    <!-- 9. 古法玉水冬瓜檸檬 -->
+    <article class="drink-card" data-category="鮮果好茶">
+      <span class="drink-tag">古早滋味 🍋</span>
+      <div class="drink-series">🍋 當季鮮果系列</div>
+      <h2 class="drink-title">玉水冬瓜檸檬</h2>
+      <div class="drink-en">Winter Melon Lemonade</div>
+      <p class="drink-desc">
+        遵照古法柴燒冬瓜磚細火慢熬出香醇濃郁的冬瓜糖露，加入屏東九如現榨檸檬原汁，酸甜層次分明，夏日消暑解熱第一名！
+      </p>
+      <div class="drink-features">
+        <div class="item-row"><strong>主要原料：</strong>柴燒古法冬瓜磚、屏東九如檸檬汁</div>
+        <div class="item-row"><strong>黃金比例：</strong>冬瓜自帶甜度，推薦 無額外加糖 ｜ 少冰</div>
+      </div>
+      <div class="drink-bottom">
+        <div class="drink-price">$55 <span>/ 大杯</span></div>
+        <a href="index.html#order" class="btn-to-order">🛒 點這杯飲料</a>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- ====================================================
+       5. 職人手繪泡茶工藝介紹區
+       ==================================================== -->
+  <section class="craft-story-section" id="tea-craft">
+    <div class="craft-card">
+      <div class="craft-img-wrap">
+        <img src="images/craft_doodle.jpg" alt="茶葉烘焙與鮮果泡茶手繪插圖">
+      </div>
+      <div class="craft-text">
+        <h3>用心萃取，每一口都是手繪的溫度</h3>
+        <p>
+          我們堅持與台灣默默耕耘的在地小農合作。無論是每天清晨手工手挖的紅柚果肉、秀水清甜的白甘蔗，還是遵循古法柴燒烘焙的原葉烏龍，每一樣食材都乘載著職人土地的厚實與用心。
+        </p>
+        <p>
+          一杯好茶，不只要好喝，更要讓你在繁忙的生活節奏裡，喝到最樸實、最天然的安心滋味。
+        </p>
+        <div class="craft-doodle-tags">
+          <span class="craft-tag">🌱 產地契作茶園</span>
+          <span class="craft-tag">🍊 100% 產地鮮果現榨</span>
+          <span class="craft-tag">🥛 台灣小農純生乳</span>
+          <span class="craft-tag">🍯 古法純手工炒糖</span>
+        </div>
+        <div style="margin-top:24px;">
+          <a href="index.html#order" style="display:inline-flex; align-items:center; gap:6px; background:var(--primary); color:#ffffff; padding:10px 22px; border-radius:8px; font-weight:700; text-decoration:none;">
+            👉 馬上點選今日好茶！
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 頁尾 -->
+  <footer>
+    <h4>我要訂飲料 ‧ 拾憶好茶</h4>
+    <p>嚴選台灣茶葉 ｜ 鮮萃現泡 ｜ 食安第一</p>
+    <p>客服信箱：service@order-tea.com.tw ｜ 客服專線：0800-888-999 (平日 09:00 - 18:00)</p>
+    <div class="copyright">
+      © 2026 我要訂飲料. All Rights Reserved. 專業手搖旗艦版 ‧ 支援多頁簡報與 Paper 檢視
+    </div>
+  </footer>
+
+  <script>
+    function filterMenu(category) {
+      var buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(function (btn) { btn.classList.remove('active'); });
+      event.target.classList.add('active');
+
+      var cards = document.querySelectorAll('.drink-card');
+      cards.forEach(function (card) {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
